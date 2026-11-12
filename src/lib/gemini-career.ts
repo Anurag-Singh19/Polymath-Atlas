@@ -126,10 +126,16 @@ Provide 6-8 real companies actively hiring in this space in topHiringCompanies.`
   const sources: CareerGroundingSource[] = [];
   for (const chunk of chunks) {
     const uri = chunk.web?.uri;
-    if (uri && !seenUrls.has(uri)) {
+    if (uri && /^https?:\/\//i.test(uri) && !seenUrls.has(uri)) {
       seenUrls.add(uri);
+      let fallbackTitle = uri;
+      try {
+        fallbackTitle = new URL(uri).hostname;
+      } catch {
+        // Keep uri string fallback
+      }
       sources.push({
-        title: chunk.web?.title || new URL(uri).hostname,
+        title: chunk.web?.title || fallbackTitle,
         url: uri,
       });
     }

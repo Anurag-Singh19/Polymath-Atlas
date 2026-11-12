@@ -40,13 +40,13 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
 }) => {
   const rawId = useId();
   const uid = rawId.replace(/:/g, '');
-  const dom = DOMAIN_MAP[domain];
+  const dom = DOMAIN_MAP[domain] || DOMAIN_MAP['swe-data'];
   const px = SIZE_PX[size];
   const rankLabel = getBadgeRankLabel(tier);
 
-  const primary = unlocked ? dom.accentHex : '#4A5750';
-  const secondary = unlocked ? '#10B981' : '#35403A';
-  const fillBg = unlocked ? '#0D1713' : '#0B100E';
+  const primary = unlocked ? dom.accentHex : '#64748B';
+  const secondary = unlocked ? '#10B981' : '#475569';
+  const fillBg = unlocked ? '#091A16' : '#0B0D14';
 
   // Crown pip coordinates along the top perimeter of a 64x64 viewBox
   const pipCount = tier;
@@ -84,14 +84,14 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
         <defs>
           <linearGradient id={`rim-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor={primary} />
-            <stop offset="55%" stopColor="#F1F5F3" stopOpacity={unlocked ? 0.9 : 0.25} />
+            <stop offset="55%" stopColor="#F4F1EA" stopOpacity={unlocked ? 0.92 : 0.3} />
             <stop offset="100%" stopColor={secondary} />
           </linearGradient>
           <radialGradient id={`core-${uid}`} cx="50%" cy="42%" r="58%">
             <stop
               offset="0%"
-              stopColor={unlocked ? secondary : '#1A2420'}
-              stopOpacity={unlocked ? 0.34 : 0.2}
+              stopColor={unlocked ? secondary : '#1E293B'}
+              stopOpacity={unlocked ? 0.34 : 0.25}
             />
             <stop offset="100%" stopColor={fillBg} stopOpacity="1" />
           </radialGradient>
@@ -181,7 +181,7 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
           {/* Inner Domain Emblem */}
           {domain === 'ai-ml' && (
             <g
-              stroke={unlocked ? '#F1F5F3' : '#52615A'}
+              stroke={unlocked ? '#FAFAFA' : '#52525B'}
               strokeWidth="1.7"
               strokeLinecap="round"
               fill="none"
@@ -191,15 +191,15 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
               <line x1="32" y1="16" x2="32" y2="27" />
               <line x1="20" y1="41" x2="28" y2="35" />
               <line x1="44" y1="41" x2="36" y2="35" />
-              <circle cx="32" cy="15" r="2.2" fill={unlocked ? secondary : '#52615A'} />
-              <circle cx="19" cy="42" r="2.2" fill={unlocked ? secondary : '#52615A'} />
-              <circle cx="45" cy="42" r="2.2" fill={unlocked ? secondary : '#52615A'} />
+              <circle cx="32" cy="15" r="2.2" fill={unlocked ? secondary : '#52525B'} />
+              <circle cx="19" cy="42" r="2.2" fill={unlocked ? secondary : '#52525B'} />
+              <circle cx="45" cy="42" r="2.2" fill={unlocked ? secondary : '#52525B'} />
             </g>
           )}
 
           {domain === 'swe-data' && (
             <g
-              stroke={unlocked ? '#F1F5F3' : '#52615A'}
+              stroke={unlocked ? '#FAFAFA' : '#52525B'}
               strokeWidth="1.9"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -208,13 +208,13 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
             >
               <polyline points="24,25 17,32 24,39" />
               <polyline points="40,25 47,32 40,39" />
-              <line x1="34.5" y1="22" x2="29.5" y2="42" stroke={unlocked ? secondary : '#52615A'} />
+              <line x1="34.5" y1="22" x2="29.5" y2="42" stroke={unlocked ? secondary : '#52525B'} />
             </g>
           )}
 
           {domain === 'cloud-sec' && (
             <g
-              stroke={unlocked ? '#F1F5F3' : '#52615A'}
+              stroke={unlocked ? '#FAFAFA' : '#52525B'}
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -223,28 +223,28 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
             >
               <rect x="23" y="29" width="18" height="13" rx="3" fill={unlocked ? '#0B1612' : 'none'} />
               <path d="M27 29 V24 A5 5 0 0 1 37 24 V29" />
-              <circle cx="32" cy="35.5" r="1.8" fill={unlocked ? secondary : '#52615A'} stroke="none" />
+              <circle cx="32" cy="35.5" r="1.8" fill={unlocked ? secondary : '#52525B'} stroke="none" />
             </g>
           )}
 
           {domain === 'quant-finance' && (
             <g
-              stroke={unlocked ? '#F1F5F3' : '#52615A'}
+              stroke={unlocked ? '#FAFAFA' : '#52525B'}
               strokeWidth="1.9"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
               opacity={unlocked ? 1 : 0.45}
             >
-              <polyline points="19,40 27,31 33,35 44,22" stroke={unlocked ? secondary : '#52615A'} />
-              <polyline points="38,22 44,22 44,28" stroke={unlocked ? secondary : '#52615A'} />
+              <polyline points="19,40 27,31 33,35 44,22" stroke={unlocked ? secondary : '#52525B'} />
+              <polyline points="38,22 44,22 44,28" stroke={unlocked ? secondary : '#52525B'} />
               <line x1="19" y1="44" x2="45" y2="44" />
             </g>
           )}
 
           {domain === 'creative-3d' && (
             <g
-              stroke={unlocked ? '#F1F5F3' : '#52615A'}
+              stroke={unlocked ? '#FAFAFA' : '#52525B'}
               strokeWidth="1.6"
               strokeLinejoin="round"
               fill="none"
@@ -258,7 +258,7 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
 
           {domain === 'business-polymath' && (
             <g
-              stroke={unlocked ? '#F1F5F3' : '#52615A'}
+              stroke={unlocked ? '#FAFAFA' : '#52525B'}
               strokeWidth="1.6"
               strokeLinejoin="round"
               fill="none"
@@ -269,7 +269,7 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
                 fill={unlocked ? secondary : 'none'}
                 fillOpacity="0.3"
               />
-              <circle cx="32" cy="32" r="2.2" fill={unlocked ? primary : '#52615A'} stroke="none" />
+              <circle cx="32" cy="32" r="2.2" fill={unlocked ? primary : '#52525B'} stroke="none" />
             </g>
           )}
 
@@ -283,8 +283,8 @@ export const SkillMasteryBadge: React.FC<SkillMasteryBadgeProps> = ({
               <polygon
                 key={idx}
                 points={`${cx},${cy - 2.6} ${cx + 2.4},${cy} ${cx},${cy + 2.6} ${cx - 2.4},${cy}`}
-                fill={unlocked ? '#10B981' : '#3E4A43'}
-                stroke="#090D0B"
+                fill={unlocked ? '#10B981' : '#334155'}
+                stroke="#06070A"
                 strokeWidth="0.8"
               />
             );

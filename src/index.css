@@ -2,16 +2,19 @@
 
 @layer base {
   :root {
-    --bg-canvas: #090d0b;
-    --bg-subtle: #0f1412;
-    --surface-card: #141b17;
-    --surface-elevated: #19221d;
-    --border-hairline: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(16, 185, 129, 0.35);
-    --text-primary: #f1f5f3;
-    --text-secondary: #a7b5ae;
-    --text-muted: #708078;
-    --accent-watermelon: #ff3366;
+    --bg-canvas: #06070a;
+    --bg-subtle: #0b0d14;
+    --surface-card: #0e111b;
+    --surface-elevated: #141928;
+    --border-hairline: rgba(244, 241, 234, 0.09);
+    --border-control: #64748b;
+    --border-hover: rgba(96, 165, 250, 0.55);
+    --text-primary: #f4f1ea;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent-cobalt: #2563eb;
+    --accent-cobalt-bright: #60a5fa;
+    --accent-halo: #f4f1ea;
     --accent-mint: #10b981;
   }
 
@@ -26,14 +29,68 @@
   h2,
   h3,
   .font-display {
-    font-family: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    letter-spacing: -0.015em;
     text-wrap: balance;
+  }
+
+  .font-ui {
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   .font-mono-data {
     font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
     font-variant-numeric: tabular-nums;
   }
+}
+
+/* Custom Round Gallery Cursor hides OS cursor on fine-pointer non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor *,
+  body.has-custom-cursor *::before,
+  body.has-custom-cursor *::after {
+    cursor: none !important;
+  }
+}
+
+/* Obsidian Gallery Surfaces & Cobalt Specular Rim */
+.wm-surface {
+  background-color: rgba(14, 17, 27, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 241, 234, 0.1);
+  box-shadow: inset 0 1px 0 rgba(96, 165, 250, 0.08);
+}
+
+.wm-inset {
+  background-color: rgba(11, 13, 20, 0.76);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(244, 241, 234, 0.09);
+}
+
+.wm-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.wm-spotlight::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(37, 99, 235, 0.18),
+    rgba(244, 241, 234, 0.05) 48%,
+    transparent 76%
+  );
+}
+
+.wm-spotlight:hover::before {
+  opacity: 1;
 }
 
 /* 3D Flashcard Flip Utilities */
@@ -54,10 +111,13 @@
   transform: rotateY(180deg);
 }
 
-/* Subtle dot matrix background for nerdy skill tree canvases */
+/* Architectural Gallery Vertical Coordinate Grid */
 .bg-grid-nerdy {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image:
+    radial-gradient(rgba(96, 165, 250, 0.1) 1px, transparent 1px),
+    linear-gradient(to right, rgba(244, 241, 234, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 241, 234, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px, 16.6667% 100%, 100% 96px;
 }
 
 @keyframes badgeUnlockPop {
@@ -79,23 +139,23 @@
   animation: badgeUnlockPop 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Custom sleek dark scrollbar */
+/* Gallery Obsidian Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #090d0b;
+  background: #06070a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f2a24;
+  background: #1e293b;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2f3e36;
+  background: #2563eb;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -133,11 +133,12 @@ export function getGlobalCompletion(
       ? skillTotal
       : topicIds.filter((id) => Boolean(completedTopicIds[id])).length;
 
+    const bucket = domainStats[skill.domain] || domainStats['swe-data'];
     total += skillTotal;
     completed += skillDone;
-    domainStats[skill.domain].total += skillTotal;
-    domainStats[skill.domain].completed += skillDone;
-    domainStats[skill.domain].skillCount += 1;
+    bucket.total += skillTotal;
+    bucket.completed += skillDone;
+    bucket.skillCount += 1;
   }
 
   for (const d of DOMAINS) {

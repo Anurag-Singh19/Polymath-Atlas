@@ -292,7 +292,7 @@ Strict Requirements (ALL arrays must be non-empty, and all label fields must be 
             ? structurePrompt
             : `${structurePrompt}\n\nIMPORTANT: Ensure "dayModules" contains 3 stages and each stage has 3 "topics" with valid "resources".`,
         config: {
-          thinkingConfig: { thinkingLevel: ThinkingLevel.MEDIUM },
+          thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
           responseMimeType: 'application/json',
           responseSchema: SKILL_RESPONSE_SCHEMA,
         },
