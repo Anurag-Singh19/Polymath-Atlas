@@ -1,0 +1,6 @@
+{
+  "name": "Polymath Atlas",
+  "description": "Dark 3D interactive skill tree, day-by-day checklist, adaptive flashcards, and resume-ready roadmap spanning 45 technical, quantitative, creative, and business disciplines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

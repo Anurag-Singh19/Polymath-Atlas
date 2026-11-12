@@ -1,0 +1,165 @@
+import React from 'react';
+import { ArrowRight, CheckCircle2, Circle } from 'lucide-react';
+import { SKILL_MAP } from '../data';
+import { SkillNode, UserProgressState } from '../types/curriculum';
+
+interface DetailedSkillFlowchartProps {
+  skill: SkillNode;
+  skillMap?: Record<string, SkillNode>;
+  progress: UserProgressState;
+  onSelectSkill: (skillId: string) => void;
+  onJumpToDayModule: (moduleId: string) => void;
+}
+
+export const DetailedSkillFlowchart: React.FC<DetailedSkillFlowchartProps> = ({
+  skill,
+  skillMap = SKILL_MAP,
+  progress,
+  onSelectSkill,
+  onJumpToDayModule,
+}) => {
+  return (
+    <section className="rounded-2xl border border-white/10 bg-[#141B17] p-6 space-y-5">
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="font-display text-xl font-bold text-[#F1F5F3]">
+            Detailed Connected Skill Tree
+          </h2>
+          <p className="text-xs text-[#A7B5AE]">
+            Live-connected pathway from upstream prerequisites through each day module to downstream specializations.
+          </p>
+        </div>
+        <div className="text-xs font-mono-data text-[#708078]">
+          Click any module or linked skill
+        </div>
+      </div>
+
+      {/* Connected 3-Stage Flow Diagram */}
+      <div className="overflow-x-auto pb-2">
+        <div className="min-w-[760px] grid grid-cols-12 items-center gap-3">
+          {/* Column 1: Prerequisites */}
+          <div className="col-span-3 space-y-2.5">
+            <div className="text-[11px] font-mono-data text-[#FF3366]">
+              Prerequisites ({skill.prerequisites.length})
+            </div>
+            {skill.prerequisites.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-white/12 bg-[#0F1412] p-3 text-xs text-[#708078]">
+                Direct Entry Foundation
+              </div>
+            ) : (
+              skill.prerequisites.map((preId) => {
+                const pre = skillMap[preId];
+                if (!pre) return null;
+                return (
+                  <button
+                    key={preId}
+                    type="button"
+                    onClick={() => onSelectSkill(preId)}
+                    className="w-full rounded-xl border border-[#FF3366]/35 bg-[#0F1412] p-3 text-left transition-colors hover:border-[#FF3366] cursor-pointer"
+                  >
+                    <div className="text-[10px] font-mono-data text-[#FF3366]">Prerequisite</div>
+                    <div className="mt-0.5 text-xs font-semibold text-[#F1F5F3] truncate">
+                      {pre.title}
+                    </div>
+                  </button>
+                );
+              })
+            )}
+          </div>
+
+          {/* Connector Arrows */}
+          <div className="col-span-1 flex justify-center text-[#FF3366]/70">
+            <ArrowRight className="h-5 w-5" />
+          </div>
+
+          {/* Column 2: Internal Connected Day Modules */}
+          <div className="col-span-4 space-y-2">
+            <div className="text-[11px] font-mono-data text-[#F1F5F3]">
+              Internal Progression ({skill.dayModules.length} Stages)
+            </div>
+            <div className="relative space-y-2">
+              {skill.dayModules.map((mod, idx) => {
+                const total = mod.topics.length;
+                const done = progress.demoPolymathMode
+                  ? total
+                  : mod.topics.filter((t) => progress.completedTopicIds[t.id]).length;
+                const isDone = total > 0 && done === total;
+
+                return (
+                  <div key={mod.id} className="relative">
+                    <button
+                      type="button"
+                      onClick={() => onJumpToDayModule(mod.id)}
+                      className={`w-full flex items-center justify-between gap-2 rounded-xl border px-3.5 py-2.5 text-left transition-colors cursor-pointer ${
+                        isDone
+                          ? 'border-[#10B981]/60 bg-[#10241B]'
+                          : 'border-white/12 bg-[#0F1412] hover:border-white/30'
+                      }`}
+                    >
+                      <div className="min-w-0">
+                        <div className="font-mono-data text-[10px] text-[#A7B5AE]">
+                          {mod.dayRange}
+                        </div>
+                        <div className="text-xs font-semibold text-[#F1F5F3] truncate">
+                          {mod.title}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0 font-mono-data text-[11px]">
+                        <span className={isDone ? 'text-[#10B981]' : 'text-[#A7B5AE]'}>
+                          {done}/{total}
+                        </span>
+                        {isDone ? (
+                          <CheckCircle2 className="h-4 w-4 text-[#10B981]" />
+                        ) : (
+                          <Circle className="h-4 w-4 text-[#708078]" />
+                        )}
+                      </div>
+                    </button>
+                    {idx < skill.dayModules.length - 1 && (
+                      <div className="mx-auto h-2 w-[2px] bg-white/15" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Connector Arrows */}
+          <div className="col-span-1 flex justify-center text-[#10B981]/70">
+            <ArrowRight className="h-5 w-5" />
+          </div>
+
+          {/* Column 3: Downstream Unlocks */}
+          <div className="col-span-3 space-y-2.5">
+            <div className="text-[11px] font-mono-data text-[#10B981]">
+              Unlocks Next ({skill.unlocks.length})
+            </div>
+            {skill.unlocks.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-white/12 bg-[#0F1412] p-3 text-xs text-[#708078]">
+                Capstone Specialization
+              </div>
+            ) : (
+              skill.unlocks.map((unId) => {
+                const un = skillMap[unId];
+                if (!un) return null;
+                return (
+                  <button
+                    key={unId}
+                    type="button"
+                    onClick={() => onSelectSkill(unId)}
+                    className="w-full rounded-xl border border-[#10B981]/35 bg-[#0F1412] p-3 text-left transition-colors hover:border-[#10B981] cursor-pointer"
+                  >
+                    <div className="text-[10px] font-mono-data text-[#10B981]">Unlocked Path</div>
+                    <div className="mt-0.5 text-xs font-semibold text-[#F1F5F3] truncate">
+                      {un.title}
+                    </div>
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
